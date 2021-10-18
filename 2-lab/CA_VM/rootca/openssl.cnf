@@ -45,7 +45,7 @@ default_ca	= CA_default		# The default ca section
 ####################################################################
 [ CA_default ]
 
-dir		= .			# Where everything is kept
+dir		= .		# Where everything is kept
 certs		= $dir/certs		# Where the issued certs are kept
 crl_dir		= $dir/crl		# Where the issued crl are kept
 database	= $dir/index.txt	# database index file.
@@ -68,7 +68,7 @@ name_opt 	= ca_default		# Subject Name options
 cert_opt 	= ca_default		# Certificate field options
 
 # Extension copying option: use with caution.
-# copy_extensions = copy
+copy_extensions = copy
 
 # Extensions to add to a CRL. Note: Netscape communicator chokes on V2 CRLs
 # so this is commented out by default to leave a V1 CRL.
@@ -174,15 +174,6 @@ authorityInfoAccess    = OCSP;URI:http://10.0.2.4
 keyUsage               = critical, nonRepudiation, digitalSignature, keyEncipherment, keyAgreement
 extendedKeyUsage       = critical, clientAuth
 
-[ server_cert ]
-# Extensions for server certificates (`man x509v3_config`).
-basicConstraints       = CA:FALSE
-subjectKeyIdentifier   = hash
-authorityKeyIdentifier = keyid, issuer
-authorityInfoAccess    = OCSP;URI:http://10.0.2.4
-keyUsage               = critical, nonRepudiation, digitalSignature, keyEncipherment, keyAgreement
-extendedKeyUsage       = critical, serverAuth
-
 [ ocsp_responder_cert ]
 # Extension for OCSP signing certificates (`man ocsp`).
 basicConstraints = CA:FALSE
@@ -243,6 +234,16 @@ authorityKeyIdentifier=keyid,issuer
 # This is required for TSA certificates.
 # extendedKeyUsage = critical,timeStamping
 
+[ server_cert ]
+# Extensions for server certificates (`man x509v3_config`).
+basicConstraints       = CA:FALSE
+subjectKeyIdentifier   = hash
+authorityKeyIdentifier = keyid, issuer
+authorityInfoAccess    = OCSP;URI:http://10.0.2.4
+keyUsage               = critical, nonRepudiation, digitalSignature, keyEncipherment, keyAgreement
+extendedKeyUsage       = critical, serverAuth
+
+
 [ v3_req ]
 
 # Extensions to add to a certificate request
@@ -251,15 +252,13 @@ basicConstraints = CA:FALSE
 keyUsage = nonRepudiation, digitalSignature, keyEncipherment
 
 [ v3_ca ]
-# Extensions for a Root CA (`man x509v3_config`).
+
+
+# Extensions for a typical CA
 basicConstraints = critical,CA:true
 subjectKeyIdentifier=hash
 authorityKeyIdentifier=keyid:always,issuer
 keyUsage = critical, cRLSign, keyCertSign
-
-
-# Extensions for a typical CA
-
 
 # PKIX recommendation.
 
