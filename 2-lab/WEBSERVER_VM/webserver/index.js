@@ -18,8 +18,12 @@ app.get('/', (request, response) => {
 
 const httpsOptions = {
     key: tlsServerKey,
-    cert: tlsServerCrt
+    cert: tlsServerCrt,
+    requestCert: true,
+    ca: caCert
 };
+
+const caCert = fs.readFleSync('./tls/cacert.pem')
 const server = https.createServer(httpsOptions, app);
 
 /**
@@ -37,4 +41,6 @@ function onListening() {
         ? 'pipe ' + addr
         : 'port ' + addr.port;
     console.log('Listening on ' + bind);
+
+
 }
