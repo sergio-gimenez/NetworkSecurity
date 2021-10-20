@@ -4,11 +4,11 @@
 
 We have installed the CA’s (Certificate Authority) certificate on the web browser. Then, we add to this browser the `cacert.pem` file. Once this is done, we can test the certificate by trying to access the node server we just run previously.
 
-![2-lab/img/add_cert_firefox.png](2-lab/img/add_cert_firefox.png)
+![add_cert](./img/add_cert_firefox.png)
 
 We can see that the certificate is valid, however we can see that the issuer is not trusted by the browser:
 
-![2-lab/img/issuer_unknown.png](2-lab/img/issuer_unknown.png)
+![2-lab/img/issuer_unknown.png](./img/issuer_unknown.png)
 
 If we revoke the webserver's certificate by running:
 
