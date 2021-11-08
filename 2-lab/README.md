@@ -280,10 +280,10 @@ const caCert = fs.readFleSync('./tls/cacert.pem')
 Then, issue a new certificate for the webserver, as we revoked the one we had before:
 
 ```source
-kali@webserver:$ openssl req -new -addext 'subjectAltName = IP:10.0.2.15' -nodes -keyout tls/webserver.key.pem -out webserver.csr.pem
+kali@webserver:$ openssl req -new -addext 'subjectAltName = IP:10.0.2.10' -nodes -keyout tls/webserver.key.pem -out webserver.csr.pem
 ```
 
-Now send it to the CA via scp:
+Now send it to the webserver via scp:
 
 ```source
 kali@websercer:$ scp webserver.csr.pem kali@10.0.2.9:~/rootca/requests/
@@ -292,14 +292,23 @@ kali@websercer:$ scp webserver.csr.pem kali@10.0.2.9:~/rootca/requests/
 Generate a certificate for the client in the root CA, making sure it has the `usr_cert` extensions:
 
 ```source
-kali@ca:$ openssl req -new -keyout private/testtlsserver.key.pem -out requests/testtlsserver.csr.pem
-kali@ca:% openssl ca -config openssl.cnf -extensions usr_cert -in requests/testtlsserver.csr.pem -out certs/testtlsserver.crt.pem
+kali@ca:$ openssl req -new -keyout private/client.key.pem -out requests/client.csr.pem
+kali@ca:% openssl ca -config openssl.cnf -extensions usr_cert -in requests/client.csr.pem -out certs/client.crt.pem
 ```
 
 After, we generate a PKCS #12 file containing the client certificate and private key using the `openssl pkcs12` command:
 
 ```source
-openssl pkcs12 -export -inkey private/testtlsserver.key.pem -in certs/testtlsserver.crt.pem -out private/testtlsserver.pfx
+kali@ca:~$ openssl pkcs12 -export -inkey private/client.key.pem -in certs/client.crt.pem -out private/client.pfx
 ```
 
-Now, we import the PKCS #12 file into the browser certificates selecting `clients.pfx`. Then, we can test the certificate by trying to access the node server we just run previously.
+Now, we import the PKCS #12 file into the browser certificates selecting `client.pfx`. Then, we can test the certificate by trying to access the node server we just run previously.
+
+We will be asked for a password:
+
+![ask_pwd](./img/ask_pwd.png)
+
+After we will be asked to accept the certificate:
+
+![accept_cert](./img/accept_cert.png)
+
