@@ -34,9 +34,8 @@ kali@ca:~/rootca$
 
 * Uncomment the line copy_extensions = copy, which allows us to add extensions from a certificate request to the final certificate.
 
- 
-TODO add here link to the file
-
+The [openssl.conf file can be found here](https://github.com/sergio-gimenez/NetworkSecurity/blob/master/2-lab/openssl.cnf)
+>Make sure to change the URI in the conf file!
 
 ### Prepare the required directories and files
 
@@ -172,7 +171,7 @@ Now, the csr `webserver/webserver.csr.pem` can be safely deleted.
 Install Node.js in your webserver VM. The easiest way is to just run:
 
 ```source
-Install Node.js in your webserver VM. The easiest way is to just run:
+sudo apt update && sudo apt install npm
 ```
 
 Now create an `index.js` file:
